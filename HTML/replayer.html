@@ -6,7 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test Replayer</title>
-
     <link rel="stylesheet" href="https://casino.gnmerritt.net//static/vendor.css">
     <link rel="stylesheet" href="https://casino.gnmerritt.net//static/app.css">
 
@@ -44,10 +43,28 @@
       </div> <!-- /.container-fluid -->
     </nav>
     <div class="replayer-text">
-      <p class="replayer-text-pot">
-        Pot:
-      </p>
+      <table class="replayer-text-pot">
+        <tr>
+          <th>Pot:</th>
+          <th>Hands</th>
+          <th>Bets:</th>
+        </tr>
+        <tr>
+          <th>Player 1: </th>
+        </tr>
+        <tr>
+          <th>Player 2:</th>
+        </tr>
+      </table>
+      <button type="previousGame-button">Previous Game</button>
+      <button type="back-button">Back</button>
+      <button type="pause-button">Pause</button>
+      <button type="forward-button" onclick="NextActionButton()">Forward</button>
+      <button type="nextGame-button">Next Game</button>
+
+
     </div>
+
 
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -57,7 +74,7 @@
       ga('create', 'UA-43468545-3', 'auto');
       ga('send', 'pageview');
     </script>
-    <script src="Brain.js"></script>
+    <script type = "text/javascript" src="/Users/Zachariah/sources/Replayer/Javascript/Brain.js"></script>
     <script src="/static/vendor.js"></script>
     <script src="/static/app.js"></script>
   </body>
