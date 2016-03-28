@@ -1,12 +1,61 @@
-//import data
-function reqListener () {
-  console.log(this.responseText);
-}
-/*var handReq = new XMLHttpRequest();
-oReq.addEventListener("load",reqListener);
-oReq.open("GET", "https://casino.gnmerritt.net/");
-oReq.send();  */
 
-//var testHandData = JSON.parse(~/Users/Zachariah/sources/JavaScript/TestData);
+
 var MATCH = {"initial_stacks": {"bot_1": 1075, "bot_0": 925}, "actions": [{"player": "bot_1", "data": ["3d", "4c"], "event": "CARDS", "ts": 1454636290}, {"player": "bot_0", "data": ["Tc", "9s"], "event": "CARDS", "ts": 1454636290}, {"player": "bot_1", "data": 10, "event": "Call", "ts": 1454636290}, {"player": "bot_0", "data": 0, "event": "Check", "ts": 1454636290}, {"player": "TABLE", "data": ["bot_1", "bot_0"], "event": "REMAINING", "ts": 1454636290}, {"player": "TABLE", "data": 40, "event": "POT", "ts": 1454636290}, {"player": "TABLE", "data": ["8c", "As", "Kd"], "event": "CARDS", "ts": 1454636290}, {"player": "bot_1", "data": 0, "event": "Check", "ts": 1454636290}, {"player": "bot_0", "data": 0, "event": "Check", "ts": 1454636291}, {"player": "TABLE", "data": ["bot_1", "bot_0"], "event": "REMAINING", "ts": 1454636291}, {"player": "TABLE", "data": 40, "event": "POT", "ts": 1454636291}, {"player": "TABLE", "data": ["8c", "As", "Kd", "5s"], "event": "CARDS", "ts": 1454636291}, {"player": "bot_1", "data": 0, "event": "Check", "ts": 1454636291}, {"player": "bot_0", "data": 0, "event": "Check", "ts": 1454636291}, {"player": "TABLE", "data": ["bot_1", "bot_0"], "event": "REMAINING", "ts": 1454636291}, {"player": "TABLE", "data": 40, "event": "POT", "ts": 1454636291}, {"player": "TABLE", "data": ["8c", "As", "Kd", "5s", "Qs"], "event": "CARDS", "ts": 1454636291}, {"player": "bot_1", "data": 0, "event": "Check", "ts": 1454636291}, {"player": "bot_0", "data": 0, "event": "Check", "ts": 1454636292}, {"player": "TABLE", "data": ["bot_1", "bot_0"], "event": "REMAINING", "ts": 1454636292}, {"player": "TABLE", "data": 40, "event": "POT", "ts": 1454636292}]};
-var pot = MATCH.TABLE.player.data;
+
+var currentAction = 0;
+
+function NextActionButton(){
+    if(MATCH.actions[currentAction].event === "POT"){
+      Pot(currentAction);
+      currentAction += 1;
+    }else if(MATCH.actions[currentAction].event === "CARDS" || MATCH.actions[currentAction].event === "REMAINING"){
+      Table(currentAction);
+      currentAction += 1;
+    }else{
+      Raise(currentAction);
+      currentAction += 1;
+    }
+}
+
+function Pot(currentAction){
+  var potSize=0;
+  if(potSize<MATCH.actions[currentAction].data){
+    potSize = MATCH.actions[currentAction].data;
+    console.log("Pot: " + potSize);
+  }
+  return potSize;
+}
+
+function Raise(currentAction){
+  var player = MATCH.actions[currentAction].player;;
+  var raise = MATCH.actions[currentAction].data;
+  if(raise === 0){
+    console.log(player + " checked.");
+  }else{
+    console.log(player + " raised " + raise);
+  }
+  return raise;
+}
+
+function Table(currentAction){
+  var table = MATCH.actions[currentAction].data;
+  var player = MATCH.actions[currentAction].player;
+  if(player != "TABLE"){
+    console.log(player + " has the cards " + table);
+  }else{
+    if(table.length === 3){
+      console.log("The flop is " + table);
+    }else if(table.length === 4){
+      console.log("The turn is " + table[3]);
+    }else if(table.length === 5){
+      console.log("The river is " + table[4]);
+    }else if(MATCH.actions[currentAction].player === "REMAINING"){
+      currentAction +=1;
+    }
+  }
+  return table;
+}
+
+
+
+console.log("Hello from javascript land");
