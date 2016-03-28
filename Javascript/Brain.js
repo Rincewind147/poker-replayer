@@ -5,15 +5,23 @@ var MATCH = {"initial_stacks": {"bot_1": 1075, "bot_0": 925}, "actions": [{"play
 var currentAction = 0;
 
 function NextActionButton(){
+  GeneralButton(1);
+}
+
+function PreviousActionButton(){
+  GeneralButton(-1);
+}
+
+function GeneralButton(buttonDirection){
     if(MATCH.actions[currentAction].event === "POT"){
       Pot(currentAction);
-      currentAction += 1;
+      currentAction += buttonDirection;
     }else if(MATCH.actions[currentAction].event === "CARDS" || MATCH.actions[currentAction].event === "REMAINING"){
       Table(currentAction);
-      currentAction += 1;
+      currentAction += buttonDirection;
     }else{
       Raise(currentAction);
-      currentAction += 1;
+      currentAction += buttonDirection;
     }
 }
 
@@ -22,6 +30,7 @@ function Pot(currentAction){
   if(potSize<MATCH.actions[currentAction].data){
     potSize = MATCH.actions[currentAction].data;
     console.log("Pot: " + potSize);
+
   }
   return potSize;
 }
@@ -45,6 +54,7 @@ function Table(currentAction){
   }else{
     if(table.length === 3){
       console.log("The flop is " + table);
+      //react stuff will go here
     }else if(table.length === 4){
       console.log("The turn is " + table[3]);
     }else if(table.length === 5){
